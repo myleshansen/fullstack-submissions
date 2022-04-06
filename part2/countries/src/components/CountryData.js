@@ -1,4 +1,22 @@
+import { useState, useEffect } from 'react'
+import axios from 'axios'
+import WeatherData from './WeatherData'
+
 const CountryData = props => {
+    const api_key = process.env.REACT_APP_API_KEY
+    const [weather, setWeather] = useState()
+
+    const weatherHook = (country) => {
+        console.log('effect 2')
+        axios
+            .get('https://api.openweathermap.org/data/2.5/weather?q=' + country + '&appid=' + api_key)
+            .then(response => {
+                console.log('promise fulfilled')
+                setWeather(response.data)
+            })
+    }
+    useEffect(weatherHook, [])
+    console.log(weather)
     return (
         <>
             <div>
@@ -13,8 +31,10 @@ const CountryData = props => {
                 )}</ul>
                 <img src={props.country.flags.png} alt="Country flag" />
             </div>
+            {/* {<WeatherData weather={props.weather} country={props.country} />} */}
         </>
     )
+
 }
 
 export default CountryData
