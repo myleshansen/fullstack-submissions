@@ -45,6 +45,20 @@ const App = () => {
     }
   }
 
+  const deletePerson = (personObject) => {
+    if (!persons.find(person => person.id === personObject.id)) {
+      alert(`${personObject.name} is not in the phonebook`)
+    } else {
+
+      personService
+        .remove(personObject.id)
+        .then(returnedPerson => {
+          console.log(returnedPerson)
+        })
+    }
+  }
+
+
   const handleNameChange = (event) => {
     setNewName(event.target.value)
   }
@@ -56,6 +70,8 @@ const App = () => {
   const handleSearchChange = (event) => {
     setNewSearch(event.target.value)
   }
+
+
 
   return (
     <div>
@@ -69,9 +85,8 @@ const App = () => {
 
       <h2>Numbers</h2>
 
-      <Persons personsToShow={personsToShow} />
+      <Persons personsToShow={personsToShow} deletePerson={deletePerson} />
     </div>
-
   )
 }
 
